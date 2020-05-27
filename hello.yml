@@ -1,0 +1,61 @@
+config:
+  target: "http://localhost:3333"
+  plugins:
+    expect: {}
+  phases:
+    - duration: 1
+      arrivalRate: 1
+scenarios:
+  - flow:
+      - post:
+          url: '/projects'
+          json:
+            title: 'hello world'
+            owner: 'lamar'
+          expect:
+            - statusCode: 200
+            - contentType: json
+            - hasProperty: "['id']"
+            - hasProperty: "['title']"
+            - hasProperty: "['owner']"
+      - get:
+          url: "/projects"
+          capture:
+            - json: "$[0].id"
+              as: id
+          expect:
+            - contentType: json
+            - equals:
+              - "345403a3-7d23-4775-8b8a-0024601a6619"
+              - "{{ id }}"
+
+      - put:
+          url: '/projects/{{ id }}'
+          json:
+            owner: 'lucas lamar'
+            title: 'hello'
+          capture:
+            - json: "$.owner"
+              as: owner
+            - json: "$.title"
+              as: title
+          expect:
+            - statusCode: 200
+            - equals:
+              - "{{ owner }}"
+              - "lucas lamar"
+            - equals:
+              - "{{ title }}"
+              - "hello"
+
+      - delete: 
+          url: '/projects/{{ id }}'
+          expect:
+            - statusCode: 201
+            - equals:
+              - "{{ id }}"
+              - "345403a3-7d23-4775-8b8a-0024601a6619"
+
+
+      
+          
