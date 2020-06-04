@@ -1,5 +1,5 @@
 
-<img src="assets/artillery-square.jpg height="200px" align="right"/>
+<img src="assets/artillery-square.jpg" height="200px" align="right"/>
 
 # projects-artillery
 
@@ -12,6 +12,7 @@ Clone o Repositorio e execute os seguintes comandos:
 npm -> install dependecies
 npm start -> start,
 npm test -> artilley-scripts test,
+```
 
 
 
