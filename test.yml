@@ -1,0 +1,71 @@
+config:
+  target: "http://localhost:3333"
+  plugins:
+    expect: {}
+  phases:
+    - duration: 1
+      arrivalRate: 1
+      # rampTo: 50
+  # defaults:
+  #   headers:
+  #     x-api-key: "{{ $processEnvironment.PARAMETER }}"
+scenarios:
+  - name: "Suite de testes de Etnias"
+    flow:
+      - post:
+          name: "Incluir Projeto"
+          url: '/projects'
+          json:
+             title: 'Tribo do Artillery'
+             owner: 'Brasilia'
+          expect:
+            - statusCode: 200
+            - contentType: "application/json; charset=utf-8"
+            - hasProperty: "['id']"
+            - hasProperty: "['title']"
+            - hasProperty: "['owner']"
+          capture:
+            json: "$"
+            as: "projetoCriado"
+
+      - get:
+          name: "Lista todos os projetos"
+          url: /projects
+          qs:
+            teste: "2"
+          expect:
+            - statusCode: 200
+            - hasProperty: "[0].id"
+            - hasProperty: "[0].title"
+            - hasProperty: "[0].owner"
+
+      - put:
+          name: "Editar Projeto"
+          url: /projects/{{ projetoCriado.id }}
+          json:
+             title: 'Tribo do Artillery Editado'
+             owner: 'Sobradinho'
+          capture:
+            json: $
+            as: projetoAlterado
+          expect:
+            - statusCode: 200
+            - hasProperty: "['id']"
+            - hasProperty: "['title']"
+            - hasProperty: "['owner']"
+            - equals:
+              - "{{ projetoAlterado.['title'] }}"
+              - "Tribo do Artillery Editado"
+            - equals:
+              - "{{ projetoAlterado.['owner'] }}"
+              - "Sobradinho"
+      - delete:
+          name: "Excluir o projeto criado no teste de inclusao"
+          url: '/projects/{{ projetoCriado.id }}'
+          capture:
+            json: $
+            as: projetoExcluido
+          expect:
+            - statusCode: 201
+
+           

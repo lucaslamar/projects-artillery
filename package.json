@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "clear && nodemon src/index.js",
-    "test" : "clear && artillery run --quiet hello.yml"
+    "test" : "clear && artillery run --quiet test.yml"
   },
   "keywords": [],
   "author": "",
