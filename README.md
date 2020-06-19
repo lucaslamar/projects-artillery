@@ -4,7 +4,7 @@
 # projects-artillery
 
 
-_Um simples crud de projetos com testes em Artillery.io_
+_Um simples Array de projetos com testes em Artillery.io_
 
 ## Getting Started
 Clone o Repositorio e execute os seguintes comandos:
