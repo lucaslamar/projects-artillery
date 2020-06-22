@@ -9,7 +9,7 @@ _Um simples Array de projetos com testes em Artillery.io_
 ## Getting Started
 Clone o Repositorio e execute os seguintes comandos:
 ```sh
-npm -> install dependecies
+npm install -> install dependecies
 npm start -> start,
 npm test -> artilley-scripts test,
 ```
